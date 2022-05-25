@@ -21,6 +21,16 @@ namespace PropertyListing.Infrastructure
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IImageRepository, ImageRepository>();
 
+            var serviceProvider = services.BuildServiceProvider();
+            try
+            {
+                var dbContext = serviceProvider.GetRequiredService<PropertyListingContext>();
+                dbContext.Database.Migrate();
+            }
+            catch
+            {
+            }
+
             return services;
         }
     }
